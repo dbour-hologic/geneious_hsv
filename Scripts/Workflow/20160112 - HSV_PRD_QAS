@@ -1,0 +1,1108 @@
+<geneiousWorkflows>
+  <XMLSerialisableRootElement name="HSV_PRD_QAS - BLAST PROBABLE" geneiousVersion="8.1.2" uniqueId="9b9c7381-fb1e-4ee9-a946-94990942bdfb" revisionNumber="205" description="&lt;html&gt;PRD Workflow&lt;br&gt;&#xA;-THIS WORKFLOW OUTPUTS PROBABLE POSITIVES - &#xA;Output Located in T:\Geneious\QAS\geneious_output&#xA;&lt;/html&gt;">
+    <workflowElement id="Operation_com.biomatters.plugins.alignment.TrimAnnotationGenerator" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="action">annotate</option>
+        <childOption name="vectorTrim">
+          <option name="vectorScreening">false</option>
+          <option name="database">UniVec</option>
+          <option name="minHit">16</option>
+        </childOption>
+        <childOption name="primerTrim">
+          <option name="primerScreening">false</option>
+          <childOption name="primerTrim">
+            <option name="primers" />
+            <option name="allowMismatches">true</option>
+            <option name="maxMismatches">5</option>
+            <option name="minLength">5</option>
+          </childOption>
+        </childOption>
+        <childOption name="errorProbability">
+          <option name="errorProbability">true</option>
+          <option name="errorLimit">0.05</option>
+        </childOption>
+        <childOption name="lowQualityTrim">
+          <option name="lowQuality">true</option>
+          <option name="lowQualityLimit">0</option>
+        </childOption>
+        <childOption name="ambiguityTrim">
+          <option name="ambiguity">false</option>
+          <option name="ambiguityLimit">2</option>
+        </childOption>
+        <childOption name="trimStart">
+          <option name="startTrim">true</option>
+          <option name="startTrimAtLeast">false</option>
+          <option name="startTrimMinimum">150</option>
+        </childOption>
+        <childOption name="trimEnd">
+          <option name="endTrim">true</option>
+          <option name="endTrimAtLeast">false</option>
+          <option name="endTrimMinimum">150</option>
+        </childOption>
+        <childOption name="maxLength">
+          <option name="use">false</option>
+          <option name="maxLength">1000</option>
+        </childOption>
+      </Options>
+      <optionToExpose optionName="action" label="" />
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementSaveAndContinue">
+      <options>
+        <option name="save">true</option>
+        <option name="saveInSubFolder">false</option>
+        <option name="subFolderName" />
+        <option name="selectDocuments">true</option>
+        <option name="doWhat">continue</option>
+        <option name="back">2</option>
+      </options>
+    </workflowElement>
+    <workflowElement id="FilterOperation" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="filterWhat">eachSequence</option>
+        <option name="match">all</option>
+        <multiOption name="filter">
+          <value>
+            <option name="field">postTrimLength</option>
+            <option name="condition">greater_than</option>
+            <option name="value">99</option>
+          </value>
+        </multiOption>
+      </Options>
+      <optionToExpose optionName="filterWhat" label="" />
+    </workflowElement>
+    <workflowElement id="com.biomatters.plugins.alignment.AssemblyOperation_Denovo" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="assemblerId">Geneious.deNovo</option>
+        <option name="assemblerVersion">8.0.3</option>
+        <option name="assemblyNamePrefixOrFolder">ReadsConsensus </option>
+        <childOption name="data">
+          <option name="useReferenceSequence">false</option>
+          <option name="customComponent1" />
+          <option name="groupAssemblies">true</option>
+          <option name="namePart">1</option>
+          <option name="nameSeparator" extra="">_ (Underscore)</option>
+          <option name="customComponent2" />
+          <option name="assembleListsSeparately">false</option>
+        </childOption>
+        <childOption name="method">
+          <childOption name="algorithm">
+            <option name="deNovoAssembly">Geneious.deNovo</option>
+            <option name="referenceAssembly">dummy</option>
+          </childOption>
+          <childOption name="Geneious.deNovo">
+            <option name="sensitivity">highest</option>
+            <option name="customComponent1" />
+            <option name="fineTune">iterate_5</option>
+            <option name="customComponent2" />
+            <option name="memoryVsSpeed">5</option>
+            <option name="expansionWordLength">10</option>
+            <option name="indexWordLength">10</option>
+            <option name="filterRepeatsdeNovo">false</option>
+            <option name="filterRepeatsSizedeNovo">1000</option>
+            <option name="allowGaps">true</option>
+            <option name="maxGapsPerRead">20</option>
+            <option name="maxGapSize">5</option>
+            <option name="maxMismatches">50</option>
+            <option name="maxAmbiguity">16</option>
+            <option name="applyMinOverlap">false</option>
+            <option name="minOverlap">25</option>
+            <option name="applyMinOverlapPercentageIdentical">false</option>
+            <option name="minOverlapPercentageIdentical">80</option>
+            <option name="doMoreThoroughSearching">true</option>
+            <option name="multipleBestMatches">mapRandomly</option>
+            <option name="reanalyzeSequencesThreshold">0</option>
+            <option name="usePairedReads">true</option>
+            <option name="onlyUsePairedHitsDeNovo">false</option>
+            <option name="onlyMapPairedHitsReference">false</option>
+            <option name="dontMergeVariantContigs">false</option>
+            <option name="dontMergeVariantContigsMaxCoverage">6</option>
+            <option name="mergeHomopolymerVariants">true</option>
+            <option name="allowCircularContigs">false</option>
+            <option name="produceScaffolds">false</option>
+            <option name="linkShortOverlaps">true</option>
+          </childOption>
+        </childOption>
+        <childOption name="trimOptions">
+          <option name="method">useExistingTrims</option>
+          <option name="trimOptionsButton">Options</option>
+          <childOption name="trimOptions">
+            <option name="action">annotate</option>
+            <childOption name="vectorTrim">
+              <option name="vectorScreening">false</option>
+              <option name="database">UniVec</option>
+              <option name="minHit">16</option>
+            </childOption>
+            <childOption name="primerTrim">
+              <option name="primerScreening">false</option>
+              <childOption name="primerTrim">
+                <option name="primers" />
+                <option name="allowMismatches">true</option>
+                <option name="maxMismatches">5</option>
+                <option name="minLength">5</option>
+              </childOption>
+            </childOption>
+            <childOption name="errorProbability">
+              <option name="errorProbability">true</option>
+              <option name="errorLimit">0.02</option>
+            </childOption>
+            <childOption name="lowQualityTrim">
+              <option name="lowQuality">false</option>
+              <option name="lowQualityLimit">1</option>
+            </childOption>
+            <childOption name="ambiguityTrim">
+              <option name="ambiguity">false</option>
+              <option name="ambiguityLimit">2</option>
+            </childOption>
+            <childOption name="trimStart">
+              <option name="startTrim">true</option>
+              <option name="startTrimAtLeast">false</option>
+              <option name="startTrimMinimum">0</option>
+            </childOption>
+            <childOption name="trimEnd">
+              <option name="endTrim">true</option>
+              <option name="endTrimAtLeast">false</option>
+              <option name="endTrimMinimum">0</option>
+            </childOption>
+            <childOption name="maxLength">
+              <option name="use">false</option>
+              <option name="maxLength">1000</option>
+            </childOption>
+          </childOption>
+        </childOption>
+        <childOption name="results">
+          <option name="nameDeNovo">{Reads Name}Consensus</option>
+          <option name="nameReference">{Reads Name} assembled to {Reference Name}</option>
+          <option name="saveReport">true</option>
+          <option name="customComponent1" />
+          <option name="saveUnusedReads">true</option>
+          <option name="customComponent2" />
+          <option name="resultsInSubfolder">false</option>
+          <option name="customComponent3" />
+          <option name="generateContigs">true</option>
+          <option name="limitGeneratedContigs">true</option>
+          <option name="generatedContigsLimit">1000</option>
+          <option name="customComponent4" />
+          <option name="generateConsensusSequencesReference">false</option>
+          <option name="consensusOptionsButtonReference">Options</option>
+          <option name="customComponent5" />
+          <option name="generateConsensusSequencesDeNovo">true</option>
+          <option name="consensusOptionsButtonDeNovo">Options</option>
+          <option name="customComponent6" />
+          <childOption name="consensus">
+            <option name="consensusSource">generateFromContig</option>
+            <childOption name="consensusOptionsReference">
+              <option name="thresholdPercent">weighted_60</option>
+              <option name="thresholdPercentNoQuality">75</option>
+              <option name="noConsensusGaps">false</option>
+              <option name="mapQuality">true</option>
+              <option name="mapQualityMethod">mapSummed</option>
+              <option name="noCoverageCharacterDeNovo">unknown</option>
+              <option name="noCoverageCharacterReference">unknown</option>
+              <option name="applyLowCoverageOrQualityCall">false</option>
+              <option name="lowCoverageOrQualityCharacter">unknown</option>
+              <option name="coverageOrQuality">coverage</option>
+              <option name="qualityThreshold">20</option>
+              <option name="coverageThreshold">2</option>
+              <option name="splitAroundQuestionMarks">false</option>
+              <option name="noConsensusEndGaps">true</option>
+              <option name="trimToReference">false</option>
+              <option name="ignoreReadsMappedToMultipleLocations">false</option>
+              <option name="callWhenGapInBestStates" />
+              <option name="howToStoreSequences">AskUser</option>
+            </childOption>
+            <childOption name="consensusOptionsDeNovo">
+              <option name="thresholdPercent">weighted_60</option>
+              <option name="thresholdPercentNoQuality">50</option>
+              <option name="noConsensusGaps">false</option>
+              <option name="mapQuality">true</option>
+              <option name="mapQualityMethod">mapHighest</option>
+              <option name="noCoverageCharacterDeNovo">unknown</option>
+              <option name="noCoverageCharacterReference">unknown</option>
+              <option name="applyLowCoverageOrQualityCall">false</option>
+              <option name="lowCoverageOrQualityCharacter">unknown</option>
+              <option name="coverageOrQuality">coverage</option>
+              <option name="qualityThreshold">20</option>
+              <option name="coverageThreshold">2</option>
+              <option name="splitAroundQuestionMarks">false</option>
+              <option name="noConsensusEndGaps">true</option>
+              <option name="trimToReference">false</option>
+              <option name="ignoreReadsMappedToMultipleLocations">false</option>
+              <option name="callWhenGapInBestStates" />
+              <option name="howToStoreSequences">AskUser</option>
+            </childOption>
+          </childOption>
+        </childOption>
+      </Options>
+      <optionToExpose optionName="data.customComponent1" label="" />
+    </workflowElement>
+    <workflowElement id="FilterOperation" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="filterWhat">eachDocument</option>
+        <option name="match">all</option>
+        <multiOption name="filter">
+          <value>
+            <option name="field">description</option>
+            <option name="condition">contains</option>
+            <option name="value">Assembly</option>
+          </value>
+        </multiOption>
+      </Options>
+      <optionToExpose optionName="filterWhat" label="" />
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementSaveAndContinue">
+      <options>
+        <option name="save">true</option>
+        <option name="saveInSubFolder">false</option>
+        <option name="subFolderName" />
+        <option name="selectDocuments">true</option>
+        <option name="doWhat">continue</option>
+        <option name="back">2</option>
+      </options>
+    </workflowElement>
+    <workflowElement id="sequenceSearch" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="database">localblast_hsv.nt</option>
+        <option name="addRemoveDatabases">Add/Remove Databases</option>
+        <option name="program">blastn</option>
+        <option name="typeOfSearchCombo">standardSearchOptionValue</option>
+        <option name="customComponent1"></option>
+        <option name="whatToRetrieve">matchingRegionWithAnnotations</option>
+        <option name="extendedRegionSize">100</option>
+        <option name="maxHits">1</option>
+        <option name="searchName">16781_HLAunmapped_subreads extraction alignment consensus sequence in 16781_HLAunmapped_subreads extraction alignment consensus sequence bases 1 - 1 - nr Discontiguous Megablast</option>
+        <childOption name="queryInputMethod">
+          <option name="queryInputMethod">use nucleotide</option>
+        </childOption>
+        <childOption name="manualQuery">
+          <option name="manuallySpecifiedQuery"></option>
+          <option name="queryAlphabet">nucleotide</option>
+          <childOption name="subsequence">
+            <option name="useSubsequence">false</option>
+            <option name="subsequenceFrom">1</option>
+            <option name="subsequenceTo">1</option>
+          </childOption>
+        </childOption>
+        <childOption name="Custom BLAST_blastn">
+          <option name="ALGORITHM">&lt;html&gt;Moderate similarity (&lt;b&gt;Standard blastn&lt;/b&gt;, &lt;i&gt;slower but more sensitive&lt;/i&gt;)&lt;/html&gt; </option>
+          <option name="maxHits">100</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">7</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="Custom BLAST_Megablast">
+          <option name="ALGORITHM">&lt;html&gt;High similarity (&lt;b&gt;Megablast&lt;/b&gt;, &lt;i&gt;very fast, only finds similar sequences&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">28</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="GAPCOSTS">linear</option>
+          <option name="NUCLEOTIDE_SCORING">1 -2</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_blastp">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="COMPOSITION_BASED_STATISTICS">Conditional compositional score matrix adjustment</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="PHI_PATTERN"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_blastn">
+          <option name="ALGORITHM">&lt;html&gt;Moderate similarity (&lt;b&gt;Standard blastn&lt;/b&gt;, &lt;i&gt;slower but more sensitive&lt;/i&gt;)&lt;/html&gt; </option>
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="WORD_SIZE">7</option>
+          <option name="HUMAN_REPEATS">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="ENTREZ_QUERY"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_tblastn">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="COMPOSITION_BASED_STATISTICS">Conditional compositional score matrix adjustment</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="Custom BLAST_tblastx">
+          <option name="maxHits">100</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="Custom BLAST_Discontiguous Megablast">
+          <option name="ALGORITHM">&lt;html&gt;Some dissimilarity (&lt;b&gt;Discontiguous Megablast&lt;/b&gt;, &lt;i&gt;very sensitive, intended for cross-species comparison&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">11</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="TEMPLATE_LENGTH">18</option>
+          <option name="TEMPLATE_TYPE">Coding</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_Discontiguous Megablast">
+          <option name="ALGORITHM">&lt;html&gt;Some dissimilarity (&lt;b&gt;Discontiguous Megablast&lt;/b&gt;, &lt;i&gt;very sensitive, intended for cross-species comparison&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="WORD_SIZE">11</option>
+          <option name="HUMAN_REPEATS">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="TEMPLATE_LENGTH">18</option>
+          <option name="TEMPLATE_TYPE">Coding</option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="ENTREZ_QUERY"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_blastx">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="GENETIC_CODE">Standard</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_tblastx">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="GENETIC_CODE">Standard</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_Megablast">
+          <option name="ALGORITHM">&lt;html&gt;High similarity (&lt;b&gt;Megablast&lt;/b&gt;, &lt;i&gt;very fast, only finds similar sequences&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="WORD_SIZE">28</option>
+          <option name="HUMAN_REPEATS">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">true</option>
+          <option name="GAPCOSTS">linear</option>
+          <option name="NUCLEOTIDE_SCORING">1 -2</option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="ENTREZ_QUERY"></option>
+        </childOption>
+        <childOption name="Custom BLAST_tblastn">
+          <option name="maxHits">100</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+      </Options>
+      <optionToExpose optionName="database" label="" />
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementSaveAndContinue">
+      <options>
+        <option name="save">true</option>
+        <option name="saveInSubFolder">false</option>
+        <option name="subFolderName" />
+        <option name="selectDocuments">true</option>
+        <option name="doWhat">continue</option>
+        <option name="back">2</option>
+      </options>
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementCombineWithEarlierDocuments">
+      <options>
+        <option name="back">4</option>
+      </options>
+    </workflowElement>
+    <workflowElement id="FilterOperation" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="filterWhat">eachDocument</option>
+        <option name="match">all</option>
+        <multiOption name="filter">
+          <value>
+            <option name="field">description</option>
+            <option name="condition">does_not_contain</option>
+            <option name="value">Assembly</option>
+          </value>
+          <value>
+            <option name="field">cache_name</option>
+            <option name="condition">contains</option>
+            <option name="value">consensus</option>
+          </value>
+        </multiOption>
+      </Options>
+      <optionToExpose optionName="filterWhat" label="" />
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementSaveAndContinue">
+      <options>
+        <option name="save">true</option>
+        <option name="saveInSubFolder">false</option>
+        <option name="subFolderName" />
+        <option name="selectDocuments">false</option>
+        <option name="doWhat">continue</option>
+        <option name="back">2</option>
+      </options>
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementCustomCode">
+      <code>import java.util.regex.*;
+
+/**
+* Compares the .ab1 files that are &gt; 100 bp with consensus sequences made. If consensus is missing
+* and &gt; 100 bp, return it and BLAST the files.
+*/
+
+public static List&lt;AnnotatedPluginDocument&gt; performOperation(List&lt;AnnotatedPluginDocument&gt; documents, Options options,
+													  ProgressListener progressListener) throws DocumentOperationException 
+
+{
+
+	// Gets the folder the files are in.
+	GeneiousService service = ServiceUtilities.getSelectedService();
+	DatabaseService databaseService = (DatabaseService) service;
+
+	// Grab all files in the document viewer
+	List&lt;AnnotatedPluginDocument&gt; documentsInFolder = databaseService.retrieve("");
+
+	// Contains all the individual sequences used to make consesus sequences
+	List&lt;AnnotatedPluginDocument&gt; alignmentSequences = getAlignmentDocuments(documentsInFolder);
+
+
+	// Contains all of the individual sequences that are post-trim &amp; &gt; 100 bp
+	List&lt;AnnotatedPluginDocument&gt; postTrimSeq = getThresholdRaw(documentsInFolder);
+
+	// A list of all sequences with &gt; 100 bp that didn't make consensus , "probable-positive"
+	List&lt;AnnotatedPluginDocument&gt; completedList = comparisons(postTrimSeq, alignmentSequences);
+
+
+	return completedList;
+}
+
+/**
+*
+* Searches the entire document viewer for consensus sequences and returns the 
+* individual sequences used to make it.
+*/
+public static List&lt;AnnotatedPluginDocument&gt; getAlignmentDocuments(List&lt;AnnotatedPluginDocument&gt; query)
+{
+	
+	// Contains all individual sequences used to make consensus
+	List&lt;AnnotatedPluginDocument&gt; individualSequences = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+
+	for (AnnotatedPluginDocument docs : query)
+	{
+	// Get the type of sequence, we're interested in the alignment class documents
+	String queryResult = docs.getDocumentClass().toString();
+	if (queryResult.contains("DefaultAlignmentDocument"))
+		{
+
+			try 
+			{
+			PluginDocument innerDoc = docs.getDocument();
+			DefaultAlignmentDocument alignmentDoc = (DefaultAlignmentDocument) innerDoc;
+
+			// Grabs all sequences used to make this specific consensus document
+			List&lt;AnnotatedPluginDocument&gt; referenceDocs = alignmentDoc.getReferencedDocuments(); 
+			for (AnnotatedPluginDocument refDocs : referenceDocs)
+				{
+				individualSequences.add(refDocs);
+				}
+			}
+
+			catch (DocumentOperationException e)
+			{
+			e.printStackTrace();
+			}
+		
+		}
+	}
+	return individualSequences;
+}
+
+
+/**
+*
+* Use regex to determine if the sequence is of type post-trim
+*
+*/
+public static boolean checkPostTrim(String seqFileName)
+{
+	String regPattern = "(.*\\.ab1)(\\s\\d)";
+	Pattern p = Pattern.compile(regPattern);
+	Matcher m = p.matcher(seqFileName);
+
+	if (m.matches()) 
+		{
+		
+			if (m.group(2).matches(" 2")) 
+			{
+			return true;
+			}
+		}
+	return false;
+}
+
+
+/**
+*
+* Searches the entire document viewer for individual sequences that are &gt; 100 bp post-trim
+* returns the list 
+*/
+public static List&lt;AnnotatedPluginDocument&gt; getThresholdRaw(List&lt;AnnotatedPluginDocument&gt; query)
+{
+
+	// Contains all individual sequences with &gt; 100 bp post trim
+	List&lt;AnnotatedPluginDocument&gt; abSequences = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+
+	for (AnnotatedPluginDocument docs : query)
+	{
+	// Get the type of sequence, we're interested in the individual .ab1 files
+	String queryResult = docs.getDocumentClass().toString();
+
+	// Checks if both nucleotide sequence and is a post-trim sequence
+	if (queryResult.contains("DefaultNucleotideGraphSequence") &amp;&amp; 
+		checkPostTrim(docs.getName())) 
+		{
+		String num = docs.getFieldValue(DocumentField.POST_TRIM_LENGTH).toString();
+		int seqLength = Integer.parseInt(num);
+		if (seqLength &gt; 99)
+			{
+			// System.out.println(docs.getName() + " " + num);
+			abSequences.add(docs);
+			}
+		}
+	}
+
+	return abSequences;
+}
+
+
+/**
+*
+* Compares the sequences used to make the consensus with all sequences with &gt; 100 bp
+* Returns the sequences that are NOT in the consensus list.
+*/
+public static List&lt;AnnotatedPluginDocument&gt; comparisons(List&lt;AnnotatedPluginDocument&gt; query,
+															List&lt;AnnotatedPluginDocument&gt; search)
+{
+
+	// QUERY - All documents with &gt; 100 bp &amp;&amp; post-trim sequence
+	// SEARCH - All documents that made consensus
+
+	List&lt;AnnotatedPluginDocument&gt; filteredList = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+
+	// Create a map with (String Name) : (Seq Object) from QUERY
+	Map&lt;String, AnnotatedPluginDocument&gt; map1 = new HashMap&lt;String, AnnotatedPluginDocument&gt;();
+
+	for (AnnotatedPluginDocument docs : query)
+	{
+	String nameOf = docs.getName();
+	String newNameOf = nameOf.replace(" 2","");
+	map1.put(newNameOf, docs);
+	}
+
+	// Removes all consensus sequences, leaving only the ones with &gt; 100 bp and no consensus
+	for (AnnotatedPluginDocument docsRemove : search)
+	{
+	String getDocName = docsRemove.getName();
+	map1.remove(getDocName);
+	}
+
+	// Push back remaining from the MAP 
+	for (Map.Entry&lt;String, AnnotatedPluginDocument&gt; entry : map1.entrySet())
+	{
+	filteredList.add(entry.getValue());
+	}
+
+	System.out.println("Getting names");
+	for (AnnotatedPluginDocument getSome : filteredList) {
+		System.out.println(getSome.getName());
+	}
+return filteredList;
+}</code>
+    </workflowElement>
+    <workflowElement id="sequenceSearch" exposeNoOptions="true" exposeAllOptions="false" showButtonForExposedGroup="false" groupNameForExposedOptions="" type="com.biomatters.plugins.workflows.DocumentOperationWorkflowElement">
+      <Options>
+        <option name="database">localblast_hsv.nt</option>
+        <option name="addRemoveDatabases">Add/Remove Databases</option>
+        <option name="program">blastn</option>
+        <option name="typeOfSearchCombo">standardSearchOptionValue</option>
+        <option name="customComponent1"></option>
+        <option name="whatToRetrieve">matchingRegionWithAnnotations</option>
+        <option name="extendedRegionSize">100</option>
+        <option name="maxHits">1</option>
+        <option name="searchName">BLAST</option>
+        <childOption name="queryInputMethod">
+          <option name="queryInputMethod">use nucleotide</option>
+        </childOption>
+        <childOption name="manualQuery">
+          <option name="manuallySpecifiedQuery"></option>
+          <option name="queryAlphabet">nucleotide</option>
+          <childOption name="subsequence">
+            <option name="useSubsequence">false</option>
+            <option name="subsequenceFrom">1</option>
+            <option name="subsequenceTo">1</option>
+          </childOption>
+        </childOption>
+        <childOption name="Custom BLAST_blastn">
+          <option name="ALGORITHM">&lt;html&gt;Moderate similarity (&lt;b&gt;Standard blastn&lt;/b&gt;, &lt;i&gt;slower but more sensitive&lt;/i&gt;)&lt;/html&gt; </option>
+          <option name="maxHits">100</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">11</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="Custom BLAST_Megablast">
+          <option name="ALGORITHM">&lt;html&gt;High similarity (&lt;b&gt;Megablast&lt;/b&gt;, &lt;i&gt;very fast, only finds similar sequences&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">28</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="GAPCOSTS">linear</option>
+          <option name="NUCLEOTIDE_SCORING">1 -2</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_blastp">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="COMPOSITION_BASED_STATISTICS">Conditional compositional score matrix adjustment</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="PHI_PATTERN"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_blastn">
+          <option name="ALGORITHM">&lt;html&gt;Moderate similarity (&lt;b&gt;Standard blastn&lt;/b&gt;, &lt;i&gt;slower but more sensitive&lt;/i&gt;)&lt;/html&gt; </option>
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="WORD_SIZE">11</option>
+          <option name="HUMAN_REPEATS">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="ENTREZ_QUERY"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_tblastn">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="COMPOSITION_BASED_STATISTICS">Conditional compositional score matrix adjustment</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="Custom BLAST_tblastx">
+          <option name="maxHits">100</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="Custom BLAST_Discontiguous Megablast">
+          <option name="ALGORITHM">&lt;html&gt;Some dissimilarity (&lt;b&gt;Discontiguous Megablast&lt;/b&gt;, &lt;i&gt;very sensitive, intended for cross-species comparison&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">11</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="TEMPLATE_LENGTH">18</option>
+          <option name="TEMPLATE_TYPE">Coding</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_Discontiguous Megablast">
+          <option name="ALGORITHM">&lt;html&gt;Some dissimilarity (&lt;b&gt;Discontiguous Megablast&lt;/b&gt;, &lt;i&gt;very sensitive, intended for cross-species comparison&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="WORD_SIZE">11</option>
+          <option name="HUMAN_REPEATS">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">true</option>
+          <option name="GAPCOSTS">5 2</option>
+          <option name="NUCLEOTIDE_SCORING">2 -3</option>
+          <option name="TEMPLATE_LENGTH">18</option>
+          <option name="TEMPLATE_TYPE">Coding</option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="ENTREZ_QUERY"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_blastx">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="GENETIC_CODE">Standard</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_tblastx">
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">true</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">false</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="GENETIC_CODE">Standard</option>
+          <option name="ENTREZ_QUERY"></option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+        <childOption name="NCBI_BLAST_Megablast">
+          <option name="ALGORITHM">&lt;html&gt;High similarity (&lt;b&gt;Megablast&lt;/b&gt;, &lt;i&gt;very fast, only finds similar sequences&lt;/i&gt;)&lt;/html&gt;</option>
+          <option name="maxHits">100</option>
+          <option name="getHitAnnos">false</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="WORD_SIZE">28</option>
+          <option name="HUMAN_REPEATS">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="MASK_LOOKUP_TABLE">true</option>
+          <option name="GAPCOSTS">linear</option>
+          <option name="NUCLEOTIDE_SCORING">1 -2</option>
+          <option name="OTHER_ADVANCED"></option>
+          <option name="ENTREZ_QUERY"></option>
+        </childOption>
+        <childOption name="Custom BLAST_tblastn">
+          <option name="maxHits">100</option>
+          <option name="LOW_COMPLEXITY">false</option>
+          <option name="EXPECT" extra="">1e-30</option>
+          <option name="WORD_SIZE">3</option>
+          <option name="MATRIX_NAME">BLOSUM62</option>
+          <option name="NUMBER_OF_CPUS">1</option>
+          <option name="GAPCOSTS">11 1</option>
+          <option name="OTHER_ADVANCED"></option>
+        </childOption>
+      </Options>
+      <optionToExpose optionName="database" label="" />
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementSaveAndContinue">
+      <options>
+        <option name="save">true</option>
+        <option name="saveInSubFolder">false</option>
+        <option name="subFolderName" />
+        <option name="selectDocuments">false</option>
+        <option name="doWhat">continue</option>
+        <option name="back">2</option>
+      </options>
+    </workflowElement>
+    <workflowElement type="com.biomatters.plugins.workflows.WorkflowElementCustomCode">
+      <code>// The following script was written to export Geneious documents after the workflow has completed. 
+// Written by David Bour, 06/17/2015 for HSV validation.
+
+// Version 8.26.2015 Changes
+/* Changed the output format
+* -- Output now returns 4 outputs
+* ---- The outputs consists of a BLAST summary | REPORT summary | Raw AB1 summary | CONCENSUS summary
+* ---- This was done for easier parsing with the LIMS system
+*/
+
+// Version 9.14.2015 Changes
+/* Added functions (renameDupe &amp; parseDupe)
+* Functions created in response to saving the POST-TRIM length of individual sequences
+*/
+
+// Version 12.22.2015 Changes
+/*
+* Added feature to create a BLAST file that contained sequences that passed the
+trim threshold, but did not produce a consensus sequence; probable positives.
+*/
+
+// Version 01.12.2016 Changes
+/*
+*
+* Created error messages wrapped with try/catch blocks for each file export.
+* Goal was to create empty files if no data is present and prompt an error message to see what went wrong.
+*/
+
+import java.io.*;
+import java.text.*;
+import java.util.regex.*;
+import javax.swing.JOptionPane;
+
+/** Used for naming the duplicate (".ab1 2") to its original file name
+* @param seqDupeName name of the .ab1 file
+* @return renamed to the original .ab1 file, removing the " 2"
+*/
+public static String renameDupe(String seqDupeName) {
+
+	String renameIt = seqDupeName;
+	String regPattern = "(.*\\.ab1)(\\s\\d)";
+	Pattern p = Pattern.compile(regPattern);
+	Matcher m = p.matcher(renameIt);
+	
+	if (m.matches()) {
+		
+		if (m.group(2).matches(" 2")) {
+			return m.group(1);	
+		}
+	}
+	return "";
+}
+
+
+/** Used for capturing the duplicate .ab1 file created from the "save" function
+* This was necessary since we cannot get TRIM length without making a duplicate of the .ab1 file
+* .ab1 after save function becomes .ab1 2 - We want to pass the .ab1 2 and not the .ab1 to the final write process
+* @param seqDocName name of the .ab1 file
+* @return true if pattern matches for *.ab1 2
+*/
+public static boolean parseDupe(String seqDocName) {
+
+	String readNames = seqDocName;
+	String seqName = renameDupe(readNames);
+
+	if (!seqName.isEmpty()) {
+		return true;	
+	}
+	return false;
+	
+}
+
+
+public static List&lt;AnnotatedPluginDocument&gt; performOperation(List&lt;AnnotatedPluginDocument&gt; documents, Options options,
+													  ProgressListener progressListener) throws DocumentOperationException, IOException 
+{
+	
+	// The following is used for naming purposes.
+	
+	Calendar theCurrentTime = new GregorianCalendar();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");	
+	String currentTimeString = sdf.format(theCurrentTime.getTime());
+
+	
+	// This is where Geneious API goes to work.
+	
+	// Gets the current working folder/directory on the left hand side of GUI.
+	GeneiousService service = ServiceUtilities.getSelectedService();
+	
+	if (service instanceof DatabaseService) 
+	
+		{
+			
+		// Sets up for query.
+		DatabaseService databaseService = (DatabaseService) service;
+		
+		// Get all documents in the document table and store into a list obj. 
+		List&lt;AnnotatedPluginDocument&gt; documentInFolder = databaseService.retrieve("");
+					
+		if (documentInFolder.size() == 0) throw new DocumentOperationException("No documents in folder");
+
+		try {
+		
+		// Convert the list into an array.
+		AnnotatedPluginDocument[] documentsToExport = documentInFolder.toArray(new AnnotatedPluginDocument[documentInFolder.size()]);
+		
+		// API that does the exporting, the directory should be changed as needed.
+		
+		// RegEx to parse Plate number out
+		String regPattern = ".*-(P\\d+)-\\D.*";
+		String plate = "PlateUnknown";
+		
+		// Search through the document list for a file with "Plate##" in the name or else default to "PlateUnknown"
+		for (int count = 0; count &lt; documentsToExport.length; count++)
+		{
+			String getDocName = documentsToExport[count].getName();
+			Pattern p = Pattern.compile(regPattern);
+			Matcher m = p.matcher(getDocName);
+			if (m.matches())
+			{
+				plate = m.group(1); 
+				break;
+			} 
+		}
+		
+		// Create ArrayList to parse separate out different file-types
+		ArrayList&lt;AnnotatedPluginDocument&gt; reportArray = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+		ArrayList&lt;AnnotatedPluginDocument&gt; conArray = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+		ArrayList&lt;AnnotatedPluginDocument&gt; seqArray = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+		ArrayList&lt;AnnotatedPluginDocument&gt; blastArray = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+
+		ArrayList&lt;AnnotatedPluginDocument&gt; probableArray = new ArrayList&lt;AnnotatedPluginDocument&gt;();
+		
+		// Go through documents after the analysis is done and sort into their respective arrays
+		for (int x = 0; x &lt; documentsToExport.length; x++)
+		{
+			String queryResult = documentsToExport[x].getDocumentClass().toString();
+			
+			if (queryResult.contains("DefaultNucleotideGraphSequence")) 
+			{
+				
+				System.out.println(documentsToExport[x]);
+				
+				if (parseDupe(documentsToExport[x].getName())) {
+				
+					String newName = renameDupe(documentsToExport[x].getName());
+					System.out.println(newName);	
+					documentsToExport[x].setName(newName);
+					documentsToExport[x].save();
+					seqArray.add(documentsToExport[x]);
+				}
+				
+			} 
+			else if (queryResult.contains("DefaultAlignmentDocument")) 
+			{
+				conArray.add(documentsToExport[x]);
+				//System.out.println(documentsToExport[x]);
+			} 
+			else if (queryResult.contains("NucleotideBlastSummaryDocument"))
+			{
+
+				String nameOfDoc = documentsToExport[x].getFieldValue("query").toString();
+				if (!nameOfDoc.contains("ReadsConsensus"))
+				{
+				probableArray.add(documentsToExport[x]);
+				}
+				else
+				{
+				blastArray.add(documentsToExport[x]);
+				}
+
+				//System.out.println(documentsToExport[x]);
+			} 
+			else 
+			{
+				reportArray.add(documentsToExport[x]);
+				//System.out.println(documentsToExport[x]);
+			}
+			
+		}
+		
+		// Convert the ArrayList to Array for the exporter method
+		AnnotatedPluginDocument[] report = new AnnotatedPluginDocument[reportArray.size()];
+		AnnotatedPluginDocument[] consensus = new AnnotatedPluginDocument[conArray.size()];
+		AnnotatedPluginDocument[] blast = new AnnotatedPluginDocument[blastArray.size()];
+		AnnotatedPluginDocument[] rawseq =  new AnnotatedPluginDocument[seqArray.size()];
+
+		AnnotatedPluginDocument[] prob = new AnnotatedPluginDocument[probableArray.size()];
+		
+		report = reportArray.toArray(report);
+		consensus = conArray.toArray(consensus);
+		blast = blastArray.toArray(blast);
+		rawseq = seqArray.toArray(rawseq);
+
+		prob = probableArray.toArray(prob);
+
+		String fileName = "HSV_RUN-" + plate + ".csv";
+		
+		
+
+		// Citrix Testing
+		
+		PluginUtilities.exportDocuments(new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-rawseq-" + fileName), rawseq);
+
+			try 
+			{
+				PluginUtilities.exportDocuments(new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-probableBLAST-" + fileName), prob);
+			} 
+			catch (UnsupportedOperationException pe)
+			{
+				File probFile = new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-probableBLAST-" + fileName);
+				probFile.createNewFile();
+				JOptionPane.showMessageDialog(null, "No probable positives found. \n Click 'OK' to continue.", "NOTICE", JOptionPane.WARNING_MESSAGE);
+			} 
+
+			try
+			{
+				PluginUtilities.exportDocuments(new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-consensus-" + fileName), consensus);
+			}
+			catch (UnsupportedOperationException ce)
+			{
+				File conFile = new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-consensus-" + fileName);
+				conFile.createNewFile();
+				JOptionPane.showMessageDialog(null, "No consensus sequences were made. \n Click 'OK' to continue.", "NOTICE", JOptionPane.WARNING_MESSAGE);
+			}
+
+			try
+			{
+				PluginUtilities.exportDocuments(new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-blast-" + fileName), blast);
+			}
+			catch (UnsupportedOperationException be)
+			{
+				File blastFile = new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-blast-" + fileName);
+				blastFile.createNewFile();
+				JOptionPane.showMessageDialog(null, "No BLAST results were found. \n Click 'OK' to continue.", "NOTICE", JOptionPane.WARNING_MESSAGE);
+				
+			}
+
+			try
+			{
+				PluginUtilities.exportDocuments(new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-summary-" + fileName), report);
+			}
+			catch (UnsupportedOperationException summ)
+			{
+				File sumFile = new File("T:////Geneious/QAS/geneious_output/" + currentTimeString + "-summary-" + fileName);
+				sumFile.createNewFile();
+				summ.printStackTrace();
+				
+			}
+
+		
+		} catch (IOException e) {
+			throw new DocumentOperationException(e);
+		} 
+			
+		}
+		
+	return Collections.emptyList();
+}</code>
+    </workflowElement>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADNElEQVR42u2XbU/TUBSA+Qn+E/iKCHSbDDb30rGNwRhbAXnbRKYwEeKggBMc6paIJGgIhMSXGBPwAyb6wS1KxG/jH4x/UP7B8Z66jra37d74yE2erLk95zmnd7db29R0PWoYm9wpk+b+ZNPcaT4d+SukI6fwH3KMc+Qcxlx54fWhX9xG+KS4Ef4N1XFSxJyGC6eCuZZU6GeBAHVSQEddxddC39nVwR8CARpEQFdNxfmBb+xy8BgMKCwFj5fl4JxRDjqrKx48bEkGjoRk/xFQBL5meO7whm4uOYcx2rlHArorNrAY+FIggIriov9z1d8lxoo5tKdgmPio70Nkvu8jKPlUiLN7uled8L/X3O2Yg7lqH9bQbSDhPSgmfAegwL9neOWz3v2LuE4M5lI+UkNTFPe9Yx54d0HOQ98uX2m5471vgXCht0roUHuxFhU4w+5kZjw7IMdo6aUxzW7DNPuGsH2m91WovViLCrzHbuUIcMnrfDUbLurOgkSMzexrxaBL6d7KUUFTrowgicgxTLkz5+QzP+V6JTJZ5mWJTZEJ5wuYcG6WmXSmqU0ZdWV40XmJQDUglyDjznSJ5zAm4dhQcNexLuOZyKgjBWP2lGJTkkZ5tZ9qQBJIEpE7Ek9hpMyagmH7aomVMpyNZ5XuFC/3I1QDJFFQSOy8imWRiG1JRlIkXOYJQu2DEfsKL3djLaqBIVsyVxJICNVswlDPY0AGu+cRzTuBNJcPyxrFWnQD3QuZUM8CyOFYvuJtOGCdhRIXHBOn4tGh9mItWtSV6BywzoGcoHWu4g9RX9d9QPxdcc1fQ3SovVhLRzZTJIAcPbE0vJYo9Jqjmv8HmKv2YQ0DWSziux0DOX5L7IzVWFppsObRrOY8ycFctQ9rGC6pxzJe8JjHQcU5y4xV/XeMsZhDeYi7YrLDNNLsMg0LBKAwD2dZhtNfDXIOYzRziRPdVV2B0xR2OzqHwIAzBxPmFeCcQQ46a3outLcH3LaOgGDr6IfGCAjoquvJuPuWp9na4StY231QFyQXHQ2/H1jaXBFCkQBVgrGRK39DMrXaOpk2W4ZpteWYm3aBACUEcY6cw5jrl9haxj/zH9oQQ7DSBAAAAABJRU5ErkJggg==</icon>
+  </XMLSerialisableRootElement>
+</geneiousWorkflows>
