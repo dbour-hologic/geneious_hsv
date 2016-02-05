@@ -37,43 +37,30 @@ import java.text.*;
 import java.util.regex.*;
 import javax.swing.JOptionPane;
 
-/** Used for naming the duplicate (".ab1 2") to its original file name
-* @param seqDupeName name of the .ab1 file
-* @return renamed to the original .ab1 file, removing the " 2"
-*/
-public static String renameDupe(String seqDupeName) {
 
-	String renameIt = seqDupeName;
-	String regPattern = "(.*\\.ab1)(\\s\\d)";
-	Pattern p = Pattern.compile(regPattern);
-	Matcher m = p.matcher(renameIt);
-	
-	if (m.matches()) {
-		
-		if (m.group(2).matches(" 2")) {
-			return m.group(1);	
+/**
+*
+* Use regex to determine if the sequence is of type original.
+*
+* The original raw files are flagged with the "original" suffix.
+* This is used to differentiate between the post-trimmed photos
+* which were renamed to the original names.
+*/
+public static boolean isOriginal(String sequenceName)
+{
+	String regexPattern = "(.*\\.ab1)(\\s\\w+)";
+	Pattern pat = Pattern.compile(regexPattern);
+	Matcher matching = pat.matcher(sequenceName);
+
+	if (matching.matches())
+	{
+		if (matching.group(2).matches(" original"))
+		{
+			return true;
 		}
 	}
-	return "";
-}
-
-
-/** Used for capturing the duplicate .ab1 file created from the "save" function
-* This was necessary since we cannot get TRIM length without making a duplicate of the .ab1 file
-* .ab1 after save function becomes .ab1 2 - We want to pass the .ab1 2 and not the .ab1 to the final write process
-* @param seqDocName name of the .ab1 file
-* @return true if pattern matches for *.ab1 2
-*/
-public static boolean parseDupe(String seqDocName) {
-
-	String readNames = seqDocName;
-	String seqName = renameDupe(readNames);
-
-	if (!seqName.isEmpty()) {
-		return true;	
-	}
 	return false;
-	
+
 }
 
 
@@ -147,12 +134,8 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 				
 				System.out.println(documentsToExport[x]);
 				
-				if (parseDupe(documentsToExport[x].getName())) {
+				if (isOriginal(documentsToExport[x].getName()) != true) {
 				
-					String newName = renameDupe(documentsToExport[x].getName());
-					System.out.println(newName);	
-					documentsToExport[x].setName(newName);
-					documentsToExport[x].save();
 					seqArray.add(documentsToExport[x]);
 				}
 				
@@ -160,7 +143,6 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 			else if (queryResult.contains("DefaultAlignmentDocument")) 
 			{
 				conArray.add(documentsToExport[x]);
-				//System.out.println(documentsToExport[x]);
 			} 
 			else if (queryResult.contains("NucleotideBlastSummaryDocument"))
 			{
@@ -174,13 +156,10 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 				{
 				blastArray.add(documentsToExport[x]);
 				}
-
-				//System.out.println(documentsToExport[x]);
 			} 
 			else 
 			{
 				reportArray.add(documentsToExport[x]);
-				//System.out.println(documentsToExport[x]);
 			}
 			
 		}

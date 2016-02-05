@@ -1,6 +1,12 @@
 
 import java.util.regex.*;
 
+/*
+***************
+* PART I
+***************
+*/
+
 /**
 * 
 * 02/04/2016, David Bour
@@ -39,14 +45,71 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 	// Grab all files in the document viewer
 	List<AnnotatedPluginDocument> documentsInFolder = databaseService.retrieve("");
 
-	// Contains all of the individual sequences that are post-trim & > 100 bp
+	// Change all names
+	changeAllNames(documentsInFolder);
+
+	//Contains all of the individual sequences that are post-trim & > 100 bp
 	List<AnnotatedPluginDocument> postTrimSeq = getThresholdRaw(documentsInFolder);
 
-	// Contains all of the sequences with pairs & > 100 bp.
+	//Contains all of the sequences with pairs & > 100 bp.
 	List<AnnotatedPluginDocument> results = checkForPairs(postTrimSeq);
 
 
 	return results;
+
+}
+
+/** Used for naming the duplicate (".ab1 2") to its original file name
+* @param seqDupeName name of the .ab1 file
+* @return renamed to the original .ab1 file, removing the " 2"
+*/
+public static String renameDupe(String seqDupeName) {
+
+	String renameIt = seqDupeName;
+	String regPattern = "(.*\\.ab1)(\\s\\d)";
+	Pattern p = Pattern.compile(regPattern);
+	Matcher m = p.matcher(renameIt);
+	
+	if (m.matches()) {
+		
+		if (m.group(2).matches(" 2")) {
+			return m.group(1);	
+		}
+	}
+	return "";
+}
+
+
+/**
+*
+* Converts the post-trimmed names to the original names.
+* Adds a suffix " original" to the original raw file names.
+*
+* This was done to preserve the names for the LIMS system when 
+* Geneious exports the data.
+*/
+
+public static void changeAllNames(List<AnnotatedPluginDocument> docsInFolder)
+{
+
+	for (AnnotatedPluginDocument docs : docsInFolder)
+	{
+
+		String docName;
+
+		if (checkPostTrim(docs.getName()))
+		{
+			docName = renameDupe(docs.getName());
+			docs.setName(docName);
+		}
+		else
+		{
+
+			docName = docs.getName();
+			docs.setName(docName + " original");
+		}
+	}
+
 
 }
 
@@ -81,7 +144,7 @@ public static List<AnnotatedPluginDocument> checkForPairs(List<AnnotatedPluginDo
 		for (int y = x+1; y < query.size(); y++)
 		{
 
-			searchRaw = query.get(y)					// Referencing the .ab1 file
+			searchRaw = query.get(y);					// Referencing the .ab1 file
 			searchName = searchRaw.getName();			// Get the human readable name of the .ab1 file
 			searchNameSuffix = getSuffix(searchName);	// Get only the unique ID to the right of the underscore (ex. HSV2-PCR-A-1_UNIQUE_ID)
 
@@ -149,6 +212,33 @@ public static boolean checkPostTrim(String seqFileName)
 	return false;
 }
 
+
+/**
+*
+* Use regex to determine if the sequence is of type original.
+*
+* The original raw files are flagged with the "original" suffix.
+* This is used to differentiate between the post-trimmed photos
+* which were renamed to the original names.
+*/
+public static boolean isOriginal(String sequenceName)
+{
+	String regexPattern = "(.*\\.ab1)(\\s\\w+)";
+	Pattern pat = Pattern.compile(regexPattern);
+	Matcher matching = pat.matcher(sequenceName);
+
+	if (matching.matches())
+	{
+		if (matching.group(2).matches(" original"))
+		{
+			return true;
+		}
+	}
+	return false;
+
+}
+
+
 /**
 *
 * Searches the entire document viewer for individual sequences that are > 100 bp
@@ -171,20 +261,17 @@ public static List<AnnotatedPluginDocument> getThresholdRaw(List<AnnotatedPlugin
 
 		// Checks if both nucleotide seuqnece and is a post-trim sequence
 		if (queryResult.contains("DefaultNucleotideGraphSequence") &&
-			checkPostTrim(docs.getName()))
+			isOriginal(docs.getName()) != true)
 			{
 			String num = docs.getFieldValue(DocumentField.POST_TRIM_LENGTH).toString();
 			int seqLength = Integer.parseInt(num);
 			if (seqLength > 99)
 				{
-				System.out.println(docs.getName() + " " + num);
 				abSequences.add(docs);
 				}
 			}
 	}
 
 	return abSequences;
-
-
 
 }

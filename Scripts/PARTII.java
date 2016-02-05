@@ -26,7 +26,6 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 	// Contains all the individual sequences used to make consesus sequences
 	List<AnnotatedPluginDocument> alignmentSequences = getAlignmentDocuments(documentsInFolder);
 
-
 	// Contains all of the individual sequences that are post-trim & > 100 bp
 	List<AnnotatedPluginDocument> postTrimSeq = getThresholdRaw(documentsInFolder);
 
@@ -36,6 +35,7 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 
 	return completedList;
 }
+
 
 /**
 *
@@ -79,26 +79,30 @@ public static List<AnnotatedPluginDocument> getAlignmentDocuments(List<Annotated
 }
 
 
+
 /**
 *
-* Use regex to determine if the sequence is of type post-trim
+* Use regex to determine if the sequence is of type original.
 *
+* The original raw files are flagged with the "original" suffix.
+* This is used to differentiate between the post-trimmed photos
+* which were renamed to the original names.
 */
-public static boolean checkPostTrim(String seqFileName)
+public static boolean isOriginal(String sequenceName)
 {
-	String regPattern = "(.*\\.ab1)(\\s\\d)";
-	Pattern p = Pattern.compile(regPattern);
-	Matcher m = p.matcher(seqFileName);
+	String regexPattern = "(.*\\.ab1)(\\s\\w+)";
+	Pattern pat = Pattern.compile(regexPattern);
+	Matcher matching = pat.matcher(sequenceName);
 
-	if (m.matches()) 
+	if (matching.matches())
+	{
+		if (matching.group(2).matches(" original"))
 		{
-		
-			if (m.group(2).matches(" 2")) 
-			{
 			return true;
-			}
 		}
+	}
 	return false;
+
 }
 
 
@@ -120,13 +124,12 @@ public static List<AnnotatedPluginDocument> getThresholdRaw(List<AnnotatedPlugin
 
 	// Checks if both nucleotide sequence and is a post-trim sequence
 	if (queryResult.contains("DefaultNucleotideGraphSequence") && 
-		checkPostTrim(docs.getName())) 
+		isOriginal(docs.getName()) != true) 
 		{
 		String num = docs.getFieldValue(DocumentField.POST_TRIM_LENGTH).toString();
 		int seqLength = Integer.parseInt(num);
 		if (seqLength > 99)
 			{
-			// System.out.println(docs.getName() + " " + num);
 			abSequences.add(docs);
 			}
 		}
@@ -156,8 +159,7 @@ public static List<AnnotatedPluginDocument> comparisons(List<AnnotatedPluginDocu
 	for (AnnotatedPluginDocument docs : query)
 	{
 	String nameOf = docs.getName();
-	String newNameOf = nameOf.replace(" 2","");
-	map1.put(newNameOf, docs);
+	map1.put(nameOf, docs);
 	}
 
 	// Removes all consensus sequences, leaving only the ones with > 100 bp and no consensus
@@ -173,7 +175,7 @@ public static List<AnnotatedPluginDocument> comparisons(List<AnnotatedPluginDocu
 	filteredList.add(entry.getValue());
 	}
 
-	System.out.println("Getting names");
+	System.out.println("Getting names that didn't make consensus...");
 	for (AnnotatedPluginDocument getSome : filteredList) {
 		System.out.println(getSome.getName());
 	}
