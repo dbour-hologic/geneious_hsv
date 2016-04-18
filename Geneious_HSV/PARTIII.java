@@ -64,6 +64,24 @@ public static boolean isOriginal(String sequenceName)
 }
 
 
+/**
+*
+* Function used to insert a place holder value for Failed Binning Fields
+* since the Geneious API exporter skips blank columns. 
+* ---> This was implemented when a file only had 29 columns instead of 30 which was normally seen
+* but since one run didn't have any "Failed Binning" results, it came out to 29 columns.
+*
+* @param consensusDocument - The document in question
+*/
+public void checkBinField(AnnotatedPluginDocument consensusDocument) {
+
+	if (consensusDocument.getFieldValue(DocumentField.BIN_REASON) == null) {
+		consensusDocument.setFieldValue(DocumentField.BIN_REASON, "none")
+	}
+
+}
+
+
 public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPluginDocument> documents, Options options,
 													  ProgressListener progressListener) throws DocumentOperationException, IOException 
 {
@@ -121,8 +139,9 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 		ArrayList<AnnotatedPluginDocument> conArray = new ArrayList<AnnotatedPluginDocument>();
 		ArrayList<AnnotatedPluginDocument> seqArray = new ArrayList<AnnotatedPluginDocument>();
 		ArrayList<AnnotatedPluginDocument> blastArray = new ArrayList<AnnotatedPluginDocument>();
-
 		ArrayList<AnnotatedPluginDocument> probableArray = new ArrayList<AnnotatedPluginDocument>();
+
+
 		
 		// Go through documents after the analysis is done and sort into their respective arrays
 		for (int x = 0; x < documentsToExport.length; x++)
@@ -141,8 +160,12 @@ public static List<AnnotatedPluginDocument> performOperation(List<AnnotatedPlugi
 				
 			} 
 			else if (queryResult.contains("DefaultAlignmentDocument")) 
-			{
-				conArray.add(documentsToExport[x]);
+			{ 
+
+				// Check for missing "Failed Binning"
+				AnnotatedPluginDocument currentDocument = documentsToExport[x];
+				checkBinField(currentDocument);
+				conArray.add(currentDocument);
 			} 
 			else if (queryResult.contains("NucleotideBlastSummaryDocument"))
 			{
